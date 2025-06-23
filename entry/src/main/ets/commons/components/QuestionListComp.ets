@@ -1,7 +1,8 @@
 import { QuestionItemComp } from '.'
-import { PageData, QuestionItem, QuestionListParams, SortType } from '../../models'
+import { PageData, QuestionItem, QuestionListParams, QuestionPageParams, SortType } from '../../models'
 import { http } from '../utils/Http'
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
+import { auth } from './Auth'
 
 @Component
 export struct QuestionListComp {
@@ -10,6 +11,7 @@ export struct QuestionListComp {
   @State isRefreshing: boolean = false
   // 试题ID
   @Prop typeId: number
+  @Prop keyword: string = ''
   @State page: number = 1
   @Prop @Watch('onChangeSort') sort: SortType = SortType.Default
   @Prop activeIndex: number
@@ -23,6 +25,16 @@ export struct QuestionListComp {
             QuestionItemComp({
               item: item
             })
+              .onClick(() => {
+                // auth.checkAuth({
+                //   url: 'pages/QuestionPage',
+                //   params: {
+                //     item,
+                //     list: this.list,
+                //   } as QuestionPageParams,
+                // })
+                router.pushUrl({ url: 'pages/QuestionPage' })
+              })
           }
         })
         this.LoadMoreBuilder()
@@ -114,6 +126,7 @@ export struct QuestionListComp {
       url: 'question/list',
       params: {
         type: this.typeId,
+        keyword: this.keyword,
         questionBankType: 10,
         sort: this.sort,
         page: this.page,

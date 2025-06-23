@@ -2,6 +2,7 @@ import { HcClockIn, formatTime } from '../commons/components'
 import { auth, UserStoreKey } from '../commons/components/Auth'
 import { User } from "../models"
 import { router } from '@kit.ArkUI'
+import { requestClockIn } from '../commons/utils'
 
 interface Nav {
   icon: ResourceStr
@@ -123,6 +124,9 @@ export struct MinePage {
         }
 
         HcClockIn({ clockInCount: this.user.clockinNumbers })
+          .onClick(() => {
+            requestClockIn()
+          })
       }
       .width('100%')
       .height(100)

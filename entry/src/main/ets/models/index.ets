@@ -48,6 +48,7 @@ export interface QuestionListParams {
   sort?: SortType
   page?: number
   pageSize?: number
+  keyword?: string
 }
 
 export interface User {
@@ -65,4 +66,39 @@ export interface User {
 export interface LoginParams {
   username: string
   password: string
+}
+
+export interface QuestionDetail extends QuestionItem {
+  /* 答案 */
+  answer: string;
+
+  /* 是否收藏 */
+  collectFlag: 0 | 1;
+
+  /* 是否点赞 */
+  likeFlag: 0 | 1;
+
+  /* 所属模块 */
+  stage: string[];
+}
+
+export interface QuestionPageParams {
+  item: QuestionItem;
+  list: QuestionItem[];
+}
+
+export interface QuestionOptParams {
+  id: string;
+
+  /* 0 试题  2 面经 */
+  type: 0 | 1;
+
+  /* 1 点赞  2 收藏 */
+  optType: 1 | 2;
+}
+
+export interface TimeItem {
+  questionId: string;
+  startTime: number;
+  endTime: number;
 }

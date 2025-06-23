@@ -4,6 +4,10 @@ export * from "./QuestionItemComp";
 
 export * from "./HcClockIn";
 
+export * from "./HcNavBar";
+
+export * from "./HcTag";
+
 const day = 60 * 60 * 24
 const hour = 60 * 60
 const min = 60

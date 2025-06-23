@@ -2,9 +2,19 @@ import { HomeCategory } from '../views/Home/HomeCategory';
 import { HcSearchBox } from '../commons/components/HcSearchBox';
 import { HcClockIn } from '../commons/components/HcClockIn';
 import { QuestionItemComp } from '../commons/components/QuestionItemComp';
+import { auth, UserStoreKey } from '../commons/components/Auth';
+import { scanBarcode } from '@kit.ScanKit';
+import { http } from '../commons/utils/Http';
+import { QuestionDetail, User } from '../models';
+import { promptAction, router } from '@kit.ArkUI';
+import { tracking } from '../commons/utils/Tracking';
+import { logger, requestClockIn } from '../commons/utils';
 
 @Component
 export struct HomePage {
+  @StorageProp('topHeight') topHeight: number = 0
+  @StorageProp(UserStoreKey) user: User = {} as User
+
   @Builder
   SwiperItemBuilder(src: ResourceStr) {
     Row() {
@@ -17,7 +27,29 @@ export struct HomePage {
     .padding({ left: 16, right: 16 })
   }
 
-  @StorageProp('topHeight') topHeight: number = 0
+  async scanQuestionCode() {
+    if (canIUse('SystemCapability.Multimedia.Scan.ScanBarcode')) {
+      const result = await scanBarcode.startScanForResult(getContext(this))
+      if (result.originalValue) {
+        try {
+          const item = await http.request<QuestionDetail>({ url: `question/${result.originalValue}` })
+          router.pushUrl({
+            url: 'pages/QuestionPage',
+            params: {
+              item,
+              list: [item]
+            }
+          })
+        } catch (e) {
+          promptAction.showToast({ message: '没有找到试题' })
+        }
+      }
+    }
+  }
+
+  aboutToAppear(): void {
+    tracking.report(true)
+  }
 
   build() {
     Column() {
@@ -25,9 +57,17 @@ export struct HomePage {
         Image($r('app.media.ic_home_scan'))
           .width(24)
           .aspectRatio(1)
+          .onClick(() => {
+            auth.checkAuth(() => {
+              this.scanQuestionCode();
+            })
+          });
         //Blank()
         HcSearchBox({ layoutWeightValue: 1 })
-        HcClockIn()
+        HcClockIn({ clockInCount: this.user.clockinNumbers })
+          .onClick(() => {
+            requestClockIn()
+          })
 
 
         // TODO 搜索组件

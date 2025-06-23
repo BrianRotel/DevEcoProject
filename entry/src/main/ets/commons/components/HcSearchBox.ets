@@ -1,3 +1,5 @@
+import { router } from "@kit.ArkUI"
+
 @Component
 export struct HcSearchBox {
   @Prop boxWidth: Length = 100
@@ -8,7 +10,7 @@ export struct HcSearchBox {
   @Prop layoutWeightValue: number = 0
 
   build() {
-    Row({ space: 4 }){
+    Row({ space: 4 }) {
       Image($r('app.media.ic_common_search'))
         .width(14)
         .aspectRatio(1)
@@ -23,5 +25,10 @@ export struct HcSearchBox {
     .borderRadius(this.boxHeight / 2)
     .justifyContent(FlexAlign.Center)
     .layoutWeight(this.layoutWeightValue)
+    .onClick(() => {
+      router.pushUrl({
+        url: 'pages/SearchPage',
+      })
+    })
   }
 }

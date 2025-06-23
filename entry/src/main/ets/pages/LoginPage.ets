@@ -5,6 +5,7 @@ import { promptAction } from '@kit.ArkUI'
 import { User, LoginParams, LOGIN_EVENT } from "../models"
 import { auth } from '../commons/components/Auth'
 import { emitter } from "@kit.BasicServicesKit"
+import { tracking } from '../commons/utils/Tracking'
 
 @Entry
 @Component
@@ -103,7 +104,7 @@ struct LoginPage {
         })
         .stateEffect(false)
         .onClick(() => {
-          // TODO
+          this.login()
         })
       }
       .padding({ left: 36, right: 36, top: 30 })
@@ -146,6 +147,7 @@ struct LoginPage {
       this.loading = false
       auth.setUser(user)
       emitter.emit(LOGIN_EVENT)
+      tracking.report(true)
       // 有 return_url 就回跳
       const params = router.getParams() as Record<string, string> || {}
       if (params?.return_url) {
