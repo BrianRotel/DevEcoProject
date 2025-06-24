@@ -102,3 +102,47 @@ export interface TimeItem {
   startTime: number;
   endTime: number;
 }
+
+export interface ClockInItem {
+  id: string,
+  createdAt: string
+}
+
+export interface ClockInfo {
+  flag: boolean
+  clockinNumbers: number
+  totalClockinNumber: number
+  clockins: ClockInItem[]
+}
+
+export interface ClockInfoParams {
+  year: string,
+  month: string
+}
+
+// 学习时间
+
+export interface StudyTimeItem {
+  id: string
+  name: string
+  total: number
+  done: number
+  undone: number
+}
+
+export interface StudyTimeCate {
+  type: string,
+  list: StudyTimeItem[]
+}
+
+export interface StudyTimeData {
+  totalTime: number,
+  studyData: StudyTimeCate[]
+}
+
+export interface WordItem {
+  zh: string
+  en: string
+  code: string
+}
+

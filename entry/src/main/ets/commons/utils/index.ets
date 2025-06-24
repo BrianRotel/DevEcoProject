@@ -27,3 +27,7 @@ export const requestClockIn = async () => {
     router.pushUrl({ url: 'pages/LoginPage' })
   }
 }
+
+export const calcPercentage = (done: number, total: number) => {
+  return Math.round(done / total * 100) + '%'
+}
