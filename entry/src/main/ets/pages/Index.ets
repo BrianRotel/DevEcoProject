@@ -5,8 +5,10 @@ import { InterviewPage } from './InterviewPage';
 import { MinePage } from './MinePage';
 import { ProjectPage } from './ProjectPage';
 import { auth } from '../commons/components/Auth'
+import { theme } from '../commons/utils/Theme';
 
 auth.initUser()
+theme.initTheme()
 
 interface TabItem {
   icon: Resource;
@@ -43,30 +45,6 @@ struct Index {
       name: '我的'
     }
   ]
-
-  // build() {
-  //   Row() {
-  //     Button('Light')
-  //       .onClick(() => {
-  //         statusBar.setLightBar()
-  //       })
-  //     Button('Dark')
-  //       .onClick(() => {
-  //         statusBar.setDarkBar()
-  //       })
-  //     Button('FullScreen')
-  //       .onClick(() => {
-  //         fullScreen.enable()
-  //       })
-  //     Button('FullScreenExit')
-  //       .onClick(() => {
-  //         fullScreen.disable()
-  //       })
-  //   }
-  //   .width('100%')
-  //   .height('100%')
-  //   .backgroundColor(Color.Grey)
-  // }
 
   @Builder
   TabBarBuilder(item: TabItem, index: number) {
@@ -105,8 +83,6 @@ struct Index {
         this.activeIndex = i
       })
       .margin({ bottom: this.bottomHeight })
-
-      //.animationDuration(3000)
     }
     .width('100%')
     .height('100%')

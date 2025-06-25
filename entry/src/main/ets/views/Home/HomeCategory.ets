@@ -25,6 +25,7 @@ export struct HomeCategory {
   @State sort: SortType = SortType.Default
   // 加载
   @State loading: boolean = false
+  @StorageProp('isDark') isDark: boolean = false
 
   build() {
     if (this.loading) {
@@ -40,8 +41,6 @@ export struct HomeCategory {
                 activeIndex: this.activeIndex,
                 index: i
               })
-              //QuestionListComp({ typeId: item.id })
-              // TODO 试题列表
             }
             .tabBar(this.TabBarBuilder(item, i))
           })
@@ -63,7 +62,10 @@ export struct HomeCategory {
         .width(56)
         .height(44)
         .justifyContent(FlexAlign.Center)
-        .linearGradient({ angle: 90, colors: [['#00FFFFFF', 0], ['#FFFFFF', 0.285]] })
+        .linearGradient({
+          angle: 90,
+          colors: [[this.isDark ? '#00131313' : '#00FFFFFF', 0], [this.isDark ? '#131313' : '#FFFFFF', 0.285]]
+        })
         .bindSheet($$this.isShow, this.FilterSheetBuilder(), {
           showClose: false,
           height: 400

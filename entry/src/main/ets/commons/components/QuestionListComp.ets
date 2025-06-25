@@ -26,14 +26,13 @@ export struct QuestionListComp {
               item: item
             })
               .onClick(() => {
-                // auth.checkAuth({
-                //   url: 'pages/QuestionPage',
-                //   params: {
-                //     item,
-                //     list: this.list,
-                //   } as QuestionPageParams,
-                // })
-                router.pushUrl({ url: 'pages/QuestionPage' })
+                auth.checkAuth({
+                  url: 'pages/QuestionPage',
+                  params: {
+                    item,
+                    list: this.list,
+                  } as QuestionPageParams,
+                })
               })
           }
         })

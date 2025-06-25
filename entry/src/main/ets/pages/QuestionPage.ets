@@ -32,13 +32,16 @@ struct QuestionPage {
     const params = router.getParams() as QuestionPageParams
     if (params) {
       this.item = params.item as QuestionDetail
-      this.list = params.list as QuestionDetail[];
+      this.list = params.list as QuestionDetail[]
+      this.questionIndex = this.list.findIndex((item) => item.id === this.item.id);
+      this.item = await this.getQuestionDetail(this.item.id)
       // 如果 item 不是完整数据才加载
       if (!this.item.answer) {
         this.questionIndex = this.list.findIndex(item => item.id === this.item.id)
         this.item = await this.getQuestionDetail(this.item.id)
         this.list[this.questionIndex] = this.item
       }
+      this.list[this.questionIndex] = this.item
       this.controller.loadUrl($rawfile('question.html'))
     }
   }
@@ -126,10 +129,6 @@ struct QuestionPage {
   @Builder
   MenuBuilder() {
     Menu() {
-      // MenuItem({ content: '点赞' })
-      // MenuItem({ content: '收藏' })
-      // MenuItem({ content: '点我反馈' })
-      // MenuItem({ content: '试题分享' })
       MenuItem({ content: this.item.likeFlag === 1 ? "取消点赞" : "点赞" }).onClick(() =>
       this.questionOpt(1, this.item.likeFlag === 1 ? 0 : 1)
       );
@@ -146,7 +145,7 @@ struct QuestionPage {
       HcNavBar({ title: '试题详情', showRightIcon: false })
       // 题目
       this.TitleBuilder('题目：')
-      Text('ArkUI的容器组件有哪些？')
+      Text(this.item.stem)
         .width('100%')
         .padding(16)
         .maxLines(2)

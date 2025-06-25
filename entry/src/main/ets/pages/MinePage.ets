@@ -102,6 +102,9 @@ export struct MinePage {
               Text('编辑信息')
                 .fontSize(12)
                 .fontColor($r('app.color.common_gray_01'))
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/ProfilePage' })
+                })
               Image($r('app.media.ic_mine_edit'))
                 .width(12)
                 .aspectRatio(1)
@@ -118,7 +121,6 @@ export struct MinePage {
             .textOverflow({ overflow: TextOverflow.Ellipsis })
             .layoutWeight(1)
             .onClick(() => {
-              console.log('12312', '点击')
               router.pushUrl({ url: 'pages/LoginPage' })
             })
         }
@@ -177,7 +179,7 @@ export struct MinePage {
         this.toolsBuilder({ icon: $r('app.media.ic_mine_info'), name: '关于我们' })
         this.toolsBuilder({
           icon: $r('app.media.ic_mine_setting'), name: '设置', onClick: () => {
-            // TODO
+            router.pushUrl({ url: 'pages/SettingsPage' })
           }
         })
       }

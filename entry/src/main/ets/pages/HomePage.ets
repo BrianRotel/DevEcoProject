@@ -68,9 +68,6 @@ export struct HomePage {
           .onClick(() => {
             requestClockIn()
           })
-
-
-        // TODO 搜索组件
       }
       .padding({ left: 16, right: 16 })
       .height(64)

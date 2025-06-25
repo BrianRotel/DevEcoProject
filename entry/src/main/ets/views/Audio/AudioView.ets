@@ -63,7 +63,6 @@ export struct AudioView {
     builder: InputDialog({
       name: this.currentItem.name,
       onSubmit: async (name) => {
-        // TODO 实现修改
         const item = this.currentItem
         item.name = name
         await audioDB.update(item)
