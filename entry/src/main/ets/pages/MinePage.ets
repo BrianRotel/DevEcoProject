@@ -167,7 +167,11 @@ export struct MinePage {
             router.pushUrl({ url: 'pages/WordPage' })
           }
         })
-        this.toolsBuilder({ icon: $r('app.media.ic_mine_ai'), name: '面试录音' })
+        this.toolsBuilder({
+          icon: $r('app.media.ic_mine_ai'), name: '面试录音', onClick: () => {
+            router.pushUrl({ url: 'pages/AudioPage' })
+          }
+        })
         this.toolsBuilder({ icon: $r('app.media.ic_mine_invite'), name: '推荐分享' })
         this.toolsBuilder({ icon: $r('app.media.ic_mine_file'), name: '意见反馈' })
         this.toolsBuilder({ icon: $r('app.media.ic_mine_info'), name: '关于我们' })
